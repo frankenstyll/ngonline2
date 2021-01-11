@@ -1,0 +1,18 @@
+<section class="container">
+  <div class="row">
+    <div class="col-lg-12">
+     
+      <a [href]="unsafeUrl">Click me unsafe</a>
+      <br/>
+      <a [href]="safeUrl">Click me safe</a>
+      <br/>
+
+      <iframe width="560" height="315" [src]="safeUtube" 
+        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen></iframe>
+
+      {{unsafeUrl}}
+
+    </div>
+  </div>
+</section>

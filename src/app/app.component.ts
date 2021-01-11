@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ngonline2';
+  title = 'ยินดีต้อนรับสู่ ngonline';
+  list: string[] = [];
 }

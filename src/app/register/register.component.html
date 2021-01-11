@@ -1,0 +1,68 @@
+<section class="container">
+  <div class="row">
+    <div class class="col-lg-6 mx-auto">
+      <h3>Register</h3>
+
+      <form #myForm="ngForm" novalidate class="needs-validation">
+
+        <div class="form-group">
+          <label for="exampleFormControlSelect1" class="required">จังหวัด</label>
+          <select [(ngModel)]="user.province"
+            #provinceModel="ngModel" class="form-control" id="exampleFormControlSelect1"
+            ngModel name="province" required>
+            <option value="">--กรุณาเลือก--</option>
+            <option [ngValue]="p.id" *ngFor="let p of provinces;">{{p.id}} {{p.name}}</option>
+          </select>
+          <div class="alert alert-danger" *ngIf="provinceModel.invalid && (provinceModel.dirty || provinceModel.touched)">
+            <span>กรุณาเลือกจังหวัด</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">ชื่อ - สกุล</label>
+          <input [(ngModel)]="user.fullname" [ngClass]="{'is-invalid': nameModel.invalid && (nameModel.dirty || nameModel.touched)}" 
+            #nameModel="ngModel" ngModel name="fullName" required
+             type="text" class="form-control" id="exampleFormControlInput1" >
+          <div class="invalid-feedback" >
+            <span>กรุณากรอกชื่อ - สกุล</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput2">Email address</label>
+          <input [(ngModel)]="user.email" #emailModel="ngModel" ngModel name="email" type="email" class="form-control" required
+            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            [ngClass]="{'is-invalid': emailModel.invalid && (emailModel.dirty || emailModel.touched)}" 
+            id="exampleFormControlInput2" placeholder="name@example.com">
+
+            <div class="invalid-feedback" >
+              <span *ngIf="emailModel.hasError('required')">กรุณากรอก Email</span>
+              <span *ngIf="emailModel.hasError('pattern')">รูปแบบ Email ไม่ถูกต้อง</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputPassword5">Password</label>
+          <input [(ngModel)]="user.password" ngModel name="password" type="password" id="inputPassword5" class="form-control" required
+            #passwordModel="ngModel" minlength="3"
+            [ngClass]="{'is-invalid': passwordModel.invalid && (passwordModel.dirty || passwordModel.touched)}" 
+            aria-describedby="passwordHelpBlock">
+            <div class="invalid-feedback" >
+              <span *ngIf="passwordModel.hasError('required')">กรุณากรอก Password</span>
+              <span *ngIf="passwordModel.hasError('minlength')">Password ต้องมีข้อมูลอย่างน้อย 3 ตัว</span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary my-1" (click)="onRegister(myForm.value)" [disabled]="myForm.invalid">สมัครสมาชิก</button>
+        &nbsp;
+        <button type="button" class="btn btn-warning my-1" (click)="myForm.reset()">clear</button>
+      </form>
+
+      <hr/>
+      oneway : {{myForm.value | json}}
+      <hr/>
+      twoway : {{user | json}}
+
+    </div>
+  </div>
+</section>

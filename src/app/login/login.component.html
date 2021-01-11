@@ -1,0 +1,20 @@
+
+<div class="alert alert-success form-control mr-sm-2" *ngIf="showMessage">
+  <strong>Login Success!</strong> 
+</div>
+<div class="alert alert-danger form-control mr-sm-2" *ngIf="showError">
+  <strong>Login fail !</strong> {{errorMessage}} 
+</div>
+
+<form class="form-inline mt-2 mt-md-0" [formGroup]="loginForm" (ngSubmit)="loginClick()" *ngIf="!isLogin">
+  
+  <input formControlName="email" class="form-control mr-sm-2" type="text" placeholder="Email" aria-label="Email">
+  <input formControlName="password" class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Password">
+  <button  class="btn btn-info my-2 my-sm-0" type="submit">Log in</button>
+  <!-- [disabled]="!loginForm.invalid" -->
+</form>
+
+<span *ngIf="isLogin" class="navbar-text mr-3">
+  Welcome :  {{profile?.name}} 
+</span>
+<button class="btn btn-secondary my-2 my-sm-0" *ngIf="isLogin" (click)="logoutClick()">Logout</button>

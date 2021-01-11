@@ -1,0 +1,24 @@
+<section class="container">
+  <div class="row">
+    <div class="col-lg-8">
+      <h3 >ข่าววันนี้ {{totalResult}} ข่าว</h3>
+      <hr/>
+      <img src="./assets/images/loading.gif" width="100" *ngIf="isLoading">
+      
+      <div class="card mb-3" *ngFor="let item of articles">
+        <img class="card-img-top" *ngIf="item.urlToImage" [src]="item.urlToImage" [alt]="item.title">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.title }}</h5>
+          <p class="card-text">{{ item.description }}</p>
+          <p class="card-text float-md-left">
+            <small class="text-muted">{{ item.source?.name | uppercase }}</small>
+          </p>
+          <p class="card-text float-md-right">
+            <small class="text-muted">{{ item.publishedAt | date: 'dd MMMM yyyy'| engtoThai }}</small>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

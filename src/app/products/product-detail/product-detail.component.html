@@ -1,0 +1,20 @@
+<section class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h3 >Product Detail : {{title}}</h3>
+      <a class="btn btn-primary md-2" [routerLink]="['/products']">Back</a>
+      <hr/>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let item of productDetails">
+          <div class="float-md-left">
+            {{ item.ch_title }}
+          </div>
+          <div class="float-md-right">
+            {{ item.ch_dateadd }}
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</section>
