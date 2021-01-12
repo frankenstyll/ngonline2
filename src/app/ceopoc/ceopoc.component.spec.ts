@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CeoTableComponent } from './ceo-table.component';
+import { CeopocComponent } from './ceopoc.component';
 
-describe('CeoTableComponent', () => {
-  let component: CeoTableComponent;
-  let fixture: ComponentFixture<CeoTableComponent>;
+describe('CeopocComponent', () => {
+  let component: CeopocComponent;
+  let fixture: ComponentFixture<CeopocComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CeoTableComponent ]
+      declarations: [ CeopocComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CeoTableComponent);
+    fixture = TestBed.createComponent(CeopocComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

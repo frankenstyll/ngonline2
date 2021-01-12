@@ -10,6 +10,7 @@ import { RegisterComponent } from './register/register.component';
 import { RegisterReactiveComponent } from './register-reactive/register-reactive.component';
 import { AuthGuard } from './shared/auth.guard';
 import { SecureComponent } from './secure/secure.component';
+import { CeopocComponent } from './ceopoc/ceopoc.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'news', component: NewsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'registerv2', component: RegisterReactiveComponent},
-  { path: 'secure', component: SecureComponent},
+  { path: 'secure', component: SecureComponent },
+  { path: 'ceopoc', component: CeopocComponent },
   { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' , canActivate: [AuthGuard]  },
 
   { path: '**', component: PagenotfoundComponent }
