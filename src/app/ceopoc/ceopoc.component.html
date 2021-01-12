@@ -13,36 +13,45 @@
         min="1"
         max="100000"></mat-slider>
 
+        https://www.freakyjolly.com/expand-collapse-single-or-multiple-rows-in-angular-98-material-table-multiple-single/#.X_1XdugzaUk
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-1" style="text-align: right;">
+        <div class="form-group">
+          <label for="monthselect" class="required">Month</label>
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <div class="form-group">
+          <select class="form-control" id="monthselect" [(ngModel)]="dataMonth"  >
+            <option value="0">--กรุณาเลือก--</option>
+            <option [ngValue]="mont.id" *ngFor="let mont of months">{{mont.id}} - {{mont.name}}</option>
+          </select>
+        </div>
       </div>
 
+      <div class="col-lg-3">
+        <button type="button" class="btn btn-primary" (click)="addMonthData()" [disabled]="!months" >add col</button>
+      </div>
+      <div class="col-lg-6">
+        
+      </div>
+    </div>
+    <div class="text-center">
+      
+    </div>
+    <div class="row">
       <div class="col-lg-12"> 
-        <mat-table [dataSource]="dataSource">
-          <ng-container  matColumnDef="policyNumber">
-              <mat-header-cell *matHeaderCellDef>Policy Number</mat-header-cell>
-              <mat-cell *matCellDef="let row">{{row.policyNumber}}</mat-cell>
-          </ng-container>
-          <ng-container  matColumnDef="creationDate">
-            <mat-header-cell *matHeaderCellDef>creationDate</mat-header-cell>
-            <mat-cell *matCellDef="let row">{{row.creationDate}}</mat-cell>
-          </ng-container>
-          <ng-container  matColumnDef="expireDate">
-            <mat-header-cell *matHeaderCellDef>expireDate</mat-header-cell>
-            <mat-cell *matCellDef="let row">{{row.expireDate}}</mat-cell>
-          </ng-container>
-          <ng-container  matColumnDef="policyAmount">
-            <mat-header-cell *matHeaderCellDef>policyAmount</mat-header-cell>
-            <mat-cell *matCellDef="let row">{{row.policyAmount}}</mat-cell>
-          </ng-container>
-          <ng-container  matColumnDef="clientId">
-            <mat-header-cell *matHeaderCellDef>clientId</mat-header-cell>
-            <mat-cell *matCellDef="let row">{{row.clientId}}</mat-cell>
-          </ng-container>
-          <ng-container  matColumnDef="employeeId">
-            <mat-header-cell *matHeaderCellDef>employeeId</mat-header-cell>
-            <mat-cell *matCellDef="let row">{{row.employeeId}}</mat-cell>
+        <mat-table *ngIf="dataSource" [dataSource]="dataSource" matSort class="mat-elevation-z8">
+          <ng-container *ngFor="let column of tableColumns" [matColumnDef]="column" >
+            <mat-header-cell *matHeaderCellDef>{{column}}</mat-header-cell>
+            <mat-cell *matCellDef="let object">{{object[column]}}</mat-cell>
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+          
           <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
 
         </mat-table>

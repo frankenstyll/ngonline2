@@ -11,6 +11,9 @@ body {
     text-anchor: middle;
 }
 
+.row {
+    padding-top: 0.6rem;
+}
 th {
     text-align: center;
 }
