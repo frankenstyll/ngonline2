@@ -1,0 +1,46 @@
+พื้นฐานการใช้งาน npm
+	-ในไฟล์ package.json จะเห็น dependencies ว่าเราใช้อะไรบ้าง เช่น bootstrap : "^4.5.3" คือให้อัพเดท เลขหลักที่สอง ถ้ามี version ใหม่มาจะได้ 4.6.0 ขึ้นไป
+		เลขหลักที่ 1 คือ โปรเจคใหม่ หรือ major change เช่น ระบุ version เลย  bootstrap : "4.5.3" จะใช้ version นี้เท่านั้น
+		เลขหลักที่ 2 คือ minor change เช่น  bootstrap : "^4.5.3" คือให้อัพเดท เลขหลักที่สอง ถ้ามี version ใหม่มาจะได้ 4.6.0 ขึ้นไป
+		เลขหลักที่ 3 คือ fix bug ต่างๆ เช่น bootstrap : "4.5.*" จะได้ version 4.5 และตามหลังด้วย version ที่ fixbug ล่าสุด
+		ไม่ใช่เครื่องหมายข้างหน้า คือ ระบุ version ตายตัวไปเลย เช่น ระบุ version เลย  bootstrap : "4.5.3"
+	
+	
+javascript ES6
+	-หลักๆจะมีการประกาศตัวแปร พวก const , let 
+	- มีเรื่องการต่อ string โดยใช้เครื่องหมาย backtrick (`) เพื่อต่อ string หรือแทรกตัวแปร
+	
+Install Angular CLI
+	-npm install -g @angular/cli  แบบนี้จะได้ version ล่าสุด
+	-npm install -g @angular/cli@7.3.8  แบบนี้จะได้ version ที่ระบุ 7.3.8
+	
+command Angular CLI	
+	-ng generate component mycomponent คือคำสั่งสร้าง component มีคำย่อคือ ng g c mycomponent
+	-ng g m mymodule --routing คือ สร้าง module ที่มี routeing module ด้วย
+
+	
+install bootstrap in project จาก https://getbootstrap.com/docs/4.5/getting-started/introduction/
+	- npm install bootstrap@4
+	- npm install jquery@3
+	- npm install popper.js *จาก https://popper.js.org/
+	
+	เพิ่มคำสั่งที่ angular.json
+	"styles": [
+	  "node_modules/bootstrap/dist/css/bootstrap.css",
+	  "src/styles.css"
+	],
+	
+	"scripts": [
+		  "node_modules/jquery/dist/jquery.slim.js",
+		  "node_modules/popper.js/dist/umd/popper.js",
+		  "node_modules/bootstrap/dist/js/bootstrap.js"
+	],
+เท่านี้ก็สามารถใช้ bootstrap 4 ได้แล้ว
+
+install font awesome เพื่อใช้งาน icon สวยๆ จาก  https://fontawesome.com/
+	-npm install --save @fortawesome/fontawesome-free
+	"styles": [
+	  "node_modules/bootstrap/dist/css/bootstrap.css",
+	  "node_modules/@fortawesome/fontawesome-free/css/all.css",
+	  "src/styles.css"
+	],

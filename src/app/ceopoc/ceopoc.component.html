@@ -36,17 +36,18 @@
         <button type="button" class="btn btn-primary" (click)="addMonthData()" [disabled]="!months" >add col</button>
       </div>
       <div class="col-lg-6">
-        
+
       </div>
     </div>
-  
+
     <div class="row">
         <div class="col-lg-12">
-          
+
         </div>
     </div>
+    <h3>Dynamic column header</h3>
     <div class="row">
-      <div class="col-lg-12"> 
+      <div class="col-lg-12">
         <mat-table *ngIf="dataSource" [dataSource]="dataSource" matSort class="mat-elevation-z8">
           <ng-container *ngFor="let column of tableColumns" [matColumnDef]="column" >
             <mat-header-cell *matHeaderCellDef>{{column}}</mat-header-cell>
@@ -54,20 +55,93 @@
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
-          
+
           <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
 
         </mat-table>
 
       </div>
     </div>
-  </section>
-  
-  <div class="text-left">
-    <a mat-raised-button (click)="toggleTableRows()" color="primary">Toggle Rows</a>
-  </div>
+    <hr/>
 
-  <mat-table [dataSource]="dataStudentsList" multiTemplateDataRows class="mat-elevation-z8">
+    <h3>Insert HTML script</h3>
+    <div class="row">
+      <div class="col-lg-12">
+        <table class="table table-bordered" id="dynamicTable">
+          <thead class="thead-dark">
+            <th scope="col">#</th>
+            <th>id</th>
+            <th>name</th>
+            <th>age</th>
+            <th>address</th>
+          </thead>
+          <tbody [innerHTML]="safeTbody">
+
+          </tbody>
+        </table>
+
+        </div>
+
+    </div>
+    <script>
+      function safeFnc(){
+        console.log('is child');
+      }
+    </script>
+    <hr/>
+
+    <h3>Multiple Template Row , Material Table</h3>
+    <div class="row">
+      <div class="col-lg-12">
+      <div class="mat-elevation-z8">
+        <table mat-table
+             [dataSource]="dataSource2" multiTemplateDataRows
+             class="mat-elevation-z8">
+        <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+          <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+          <td mat-cell *matCellDef="let element"> {{element[column]}}<div class="shortcode-col col-xs-12"></div> </td>
+        </ng-container>
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+            <div class="example-element-detail"
+                 [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <div class="example-element-diagram">
+                <div class="example-element-position"> {{element.position}} </div>
+                <div class="example-element-symbol"> {{element.symbol}} </div>
+                <div class="example-element-name"> {{element.name}} </div>
+                <div class="example-element-weight"> {{element.weight}} </div>
+              </div>
+              <div class="example-element-description">
+                {{element.description}}
+                <span class="example-element-description-attribution"> -- Wikipedia </span>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+            class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+      </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+
+    </div>
+
+</section>
+
+
+
+  <!-- <div class="text-left">
+    <a mat-raised-button (click)="toggleTableRows()" color="primary">Toggle Rows</a>
+  </div> -->
+
+  <!-- <mat-table [dataSource]="dataStudentsList" multiTemplateDataRows class="mat-elevation-z8">
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> id </th>
@@ -100,8 +174,6 @@
       </td>
     </ng-container>
 
-
-    <!-- Template for details row -->
     <ng-container matColumnDef="expandedDetail">
       <td mat-cell *matCellDef="let element" [attr.colspan]="displayedStudentsColumnsList.length">
 
@@ -122,9 +194,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedStudentsColumnsList;sticky: true"></tr>
     <tr mat-row *matRowDef="let element; columns: displayedStudentsColumnsList;" class="student-element-row"
       [class.student-expanded-row]="element.isExpanded"></tr>
-
-    <!-- Extra row to show detail content column -->
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="student-detail-row"></tr>
 
-  </mat-table>
-  
+  </mat-table> -->
+

@@ -8,7 +8,8 @@ import {
   MatSliderModule,
   MatTableModule,
   MatListModule,
-  MatButtonModule
+  MatButtonModule,
+  MatPaginatorModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -56,7 +57,8 @@ import { CeopocComponent } from './ceopoc/ceopoc.component';
     MatSliderModule,
     MatTableModule,
     MatListModule,
-    MatButtonModule
+    MatButtonModule,
+    MatPaginatorModule
 
   ],
   providers: [],

@@ -1,0 +1,144 @@
+ส่วนของ component
+	-ในไฟล์ app.module.ts
+		-ถ้าอยากใช้ component จะต้องเอาไว้ที่ declaration
+			declarations: [
+				AppComponent
+			  ],
+		-ถ้าอยากใช้ module จะต้องเอาไว้ที่ imports
+		  imports: [
+			BrowserModule,
+			AppRoutingModule
+		  ],
+		-ส่วน bootstrap จะเป็นส่วนที่บอกว่าจะให้ระบบใช้ component ไหนเป็น component แรก
+			bootstrap: [AppComponent]
+
+เมื่อ ng serve แล้วไฟล์ main.ts จะถูกทำก่อน
+	platformBrowserDynamic().bootstrapModule(AppModule) คือการดึง AppModule เข้ามาทำงานก่อน
+
+เรื่อง angular standard module หลักๆจะมีอยู่ 5 modules ที่ใช้บ่อย
+	-BrowserModule
+	-CommonModule
+	-RouterModule
+	-FormsModule
+	-HttpClientModule
+
+การ binding
+	-{{expression}} เอาไว้ดึงค่า property จาก ts  , ts -> html
+	-[property] เอาไว้ set property ของ html , ts -> html
+	-(event) เป็น event ของ html เช่น event click, html -> ts
+	-[(ngModel)] เป็น two way binding , html <-> ts ใช้กรณีที่เป็นหน้า 
+	
+รูปภาพ หรือไฟล์ static ต่างๆเช่น json file , icon ให้เก็บไว้ที่ folder assets
+
+life cycle ที่ใช้บ่อย
+	-contructor()
+	-ngOnChanges()
+	-ngOnInit()
+	-ngDoCheck()
+	-ngOnDestroy
+
+ต่อกับ backend
+	- import HttpClientModule ไว้ที่ app.module.ts
+	- หลังจากนั้นจึงสามารถใช้ HttpClient ได้
+
+สร้าง services สำหรับต่อ backend  ให้สร้างไว้ที่ folder ของ module นั้นตามด้วย shared แล้วค่อยตามด้วยชื่อ serviceเช่น
+	product/shared/product
+	
+ถ้า component ไหนที่ต้องการเรียกใช้ services จะต้องประกาศไว้ที่ constructor ของ component นั้นเสมอ	
+	
+rxjs Operators จัดการข้อมูลที่รับจากหลังบ้านก่อนโยนไปให้ component หน้าบ้าน, Observables 
+	-component ที่เรียกใช้จะต้องใช้ function subscribe() ของ rxjs เพื่อรับข้อมูล
+	จาก services และ function แรกที่อยู่ใน subscribe() จะเป็นตัวรับข้อมูล	
+
+model ใน type script ถ้ามีการประกาศ แบบ name?: any แสดงว่ามันสามารถเป็น null ได้ เช่น id?:any หรือ name?:string
+	export interface Source {
+		id?: any;
+		name: string;
+	}
+
+routing guard
+	-{ path: '**', component: PagenotfoundComponent} กรณีที่ url คือ ** ไม่ map กับ routing ไหนเลย ให้ไปที่ pagenotfound component
+	- เพิ่ม useHash ไว้ที่ app-routing-module จะทำให้ url เติม /#/ ให้ เช่น http://localhost:4200/#/news โดยที่เราไม่ต้องทำอะไร
+		@NgModule({
+		  imports: [RouterModule.forRoot(routes, {useHash: true})], 
+		  exports: [RouterModule]
+		})
+	
+	-กำหนด link ใน code ได้ด้วย this.router.navigate(['/home']);
+	
+แยก module สำหรับการทำงานแต่ละอย่าง หรือแต่ละเมนู โดยใช้ Feature module
+	-ng g m dashboard --routing สร้าง module ใหม่โดยเพิ่ม routing ด้วย
+	-สร้าง component ng g c dashboard/home กรณีที่เข้า url /dashboard ระบบจะวิ่งมาที่ dashboard/home ก่อน
+	- สร้าง url สำหรับ dashboard module ที่ app-routing-module 
+		{ path: 'dashboard' , loadChildren: './dashboard/dashboard.module#DashboardModule'}
+	
+	-ถ้าอยากให้โหลดทุก module มาตั้งแต่ครั้งแรกเลยจะใช้  
+		RouterModule.forRoot(routes, { useHash: true , preloadingStrategy: PreloadAllModules} )
+		โดยเอาไว้ตรงที่ app-routing-module -> import
+	
+Route Guard จะมี event ดังนี้ คำสั่งคือ ng g g <ชื่อ>
+	-CanActivate เอาไปใส่ใน property ของ routePath
+		{ path: 'news', component: NewsComponent , canActivate: [AuthGuard]},
+	-CanActivateChild
+	-CanDeactivate
+	-Resolve หมายถึง สามารถรับ data ได้หรือไม่
+	-CanLoad คือ block ไม่ให้โหลด component module นั้นมาเลย
+	
+		
+Pipes กำหนดรูปแบบการแสดงที่หน้าจอ มีทั้งแบบ angular ที่ buildin มาให้กับแบบ custom เอง
+	buildin pipes
+		-{{birthday | date}} หรือ {{date:'MM/dd/yyyy'}} นอกจาก date ก็จะมีเรื่องค่าเงิน , uppercase , จุดทศนิยม
+			สามารถต่อกันได้เช่น {{birthday | date | uppercase}}
+			
+	custom pipes ng g pipe ชื่อ
+
+forms จะมีอยู่ 2 แบบคือ  FormsModule เป็น form ธรรมดาเขียนด้วย html , ReactiveFormsModule จะเขียนด้วย typescript
+	จะต้อง import  ไว้ที่ module ด้วย
+	-<form #myForm="ngForm" novalidate>  form นี้ชื่อ myForm เป็นชนิด ngForm , novalidate คือจะใช้ validate ของ angular
+	-<select class="form-control" id="exampleFormControlSelect1" 
+		ngModel name="province"> อยากผูกข้อมูลต้องเพิ่ม ngModel name="ชื่อที่ต้องการ" สามารถใส่ชื่อ name ได้เลยโดยที่ไม่ต้องกำหนดไว้ที่ typescript
+		
+jwt json web token
+	-เมื่อส่ง user, pass ไป authen ที่ server ตัว server จะส่ง token กลับมาให้ client และจำเก็บไว้คล้ายๆ session หรือ cookies
+		-ตัว client จะเก็บไว้ที่ localStorage.setItem('mycat','xxx'); 
+		-let cat = localStorage.getItem('myCat'); ดึงค่า
+		-localStorage.removeItem('myCat'); ลบค่า
+		-localStorage.clear(); เคลียร์ค่า
+	
+	สร้าง user เพื่อติดต่อ api jwt : https://auth0.com/
+	user: nontapap.th@gmail.com
+	pass: Newkumpon@21
+	
+	สร้าง application
+		-Allowed Web Origins : http://localhost:4200
+		-Allowed Origins (CORS) : http://localhost:4200
+		-เลือก show advance
+			-grant type -> เลือก password -> save
+		
+	database ชื่อ Username-Password-Authentication
+	
+	ไปที่ account -> setting วางชื่อ database ไว้ที่ default directory : Username-Password-Authentication กด save 
+	
+	เท่านี้ก็น่าจะใช้เบื้องต้นได้แล้ว
+	
+	domain จะอยู่ที่
+		application -> NgOnline -> setting -> domain
+		 
+	
+rxjs จะมี operators การทำงานที่เกี่ยวข้องกับ backend หลายๆอย่าง	
+	import { HttpClient, HttpErrorResponse } from '@angular/common/http'; // HttpErrorResponse เอาไว้รับ error
+	import { Injectable } from '@angular/core';
+	import { Observable, throwError } from 'rxjs'; // throwError เอาไว้ throw error
+	import { catchError, retry } from 'rxjs/operators'; // ดักจับตัว error , retry เมื่อเรียกครั้งแรกไม่ได้,
+	
+	return this.http.post<any>(this.loginUrl, body, { headers: this.HEADER_JSON })
+      .pipe(
+			// วิธีใช้ operators ของ rxjs
+			retry(1), // retry ก่นอ 1 รอบ
+			catchError(this.handleError) // ถ้าเกิด error ให้โยนออกไป
+      );
+	
+Sanitization and security contexts
+	คือการตรวจสอบค่าที่ไม่น่าเชื่อถือต่างๆก่อนจะเพิ่มเข้าไปใน dom
+ 	-innerHtml 
+	
