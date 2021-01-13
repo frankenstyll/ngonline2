@@ -1,10 +1,20 @@
 import { CeoData } from './shared/ceodata.model';
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-ceopoc',
   templateUrl: './ceopoc.component.html',
-  styleUrls: ['./ceopoc.component.css']
+  styleUrls: ['./ceopoc.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class CeopocComponent implements OnInit {
 
@@ -26,8 +36,107 @@ export class CeopocComponent implements OnInit {
     {id: 12, name: 'Dec'}
   ];
 
+  isTableExpanded = false;
+
+  STUDENTS_DATA = [
+    {
+      "id": 1,
+      "name": "Abby Jaskolski ",
+      "age": 21,
+      "address": 1.0079,
+      "isExpanded": false,
+      "subjects": [
+        {
+          "name": "Bio",
+          "type": "Medical",
+          "grade": "A"
+        },
+        {
+          "name": "Chemistry",
+          "type": "Medical",
+          "grade": "A"
+        },
+        {
+          "name": "Physics",
+          "type": "Medical",
+          "grade": "A"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Jabari Fritsch",
+      "age": 20,
+      "address": 1.0079,
+      "isExpanded": false,
+      "subjects": [
+        {
+          "name": "Bio",
+          "type": "Medical",
+          "grade": "A"
+        },
+        {
+          "name": "Chemistry",
+          "type": "Medical",
+          "grade": "A"
+        },
+        {
+          "name": "Physics",
+          "type": "Medical",
+          "grade": "A"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Maybell Simonis",
+      "age": 21,
+      "address": 1.0079,
+      "isExpanded": false,
+      "subjects": [
+        {
+          "name": "Bio",
+          "type": "Medical",
+          "grade": "A"
+        },
+        {
+          "name": "Chemistry",
+          "type": "Medical",
+          "grade": "A"
+        },
+        {
+          "name": "Physics",
+          "type": "Medical",
+          "grade": "A"
+        }
+      ]
+    }
+  ];
+
+ dataStudentsList = new MatTableDataSource();
+ displayedStudentsColumnsList: string[] = ['id', 'name', 'age', 'address', 'actions'];
+
   constructor() {
     this.dataMonth = 0;
+  }
+
+  ngOnInit() {
+
+    this.dataStudentsList.data = this.STUDENTS_DATA;
+
+    let ob = {} as CeoData;
+    for (let i = 0; i < 5; i++) {
+      ob.policyNumber = ''+i+i;
+      ob.creationDate='1122212' + i;
+      ob.expireDate='1122212' + i;
+      ob.policyAmount = 1122212 + i;
+      ob.clientId='1122212' + i;
+      ob.employeeId = '1122212' + i;
+      if (undefined === this.dataSource) {
+        this.dataSource = [];
+      }
+      this.dataSource.push(ob);
+    }
   }
 
   addMonthData() {
@@ -60,21 +169,14 @@ export class CeopocComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    let ob = {} as CeoData;
-    for (let i = 0; i < 5; i++) {
-      ob.policyNumber = ''+i+i;
-      ob.creationDate='1122212' + i;
-      ob.expireDate='1122212' + i;
-      ob.policyAmount = 1122212 + i;
-      ob.clientId='1122212' + i;
-      ob.employeeId = '1122212' + i;
-      if (undefined === this.dataSource) {
-        this.dataSource = [];
-      }
-      this.dataSource.push(ob);
-    }
+  toggleTableRows() {
+    this.isTableExpanded = !this.isTableExpanded;
+
+    this.dataStudentsList.data.forEach((row: any) => {
+      row.isExpanded = this.isTableExpanded;
+    });
   }
+
 
 
   formatLabel(value: number) {
@@ -83,4 +185,5 @@ export class CeopocComponent implements OnInit {
     }
     return value;
   }
+
 }

@@ -6,7 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // สำห�
 
 import {
   MatSliderModule,
-  MatTableModule
+  MatTableModule,
+  MatListModule,
+  MatButtonModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -52,7 +54,10 @@ import { CeopocComponent } from './ceopoc/ceopoc.component';
     BrowserAnimationsModule,
 
     MatSliderModule,
-    MatTableModule
+    MatTableModule,
+    MatListModule,
+    MatButtonModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
