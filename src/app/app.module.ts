@@ -28,6 +28,7 @@ import { LoginComponent } from './login/login.component';
 import { SecureComponent } from './secure/secure.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CeopocComponent } from './ceopoc/ceopoc.component';
+import { MaterialModuleModule } from './material-module';
 
 @NgModule({
   declarations: [
@@ -53,12 +54,7 @@ import { CeopocComponent } from './ceopoc/ceopoc.component';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-
-    MatSliderModule,
-    MatTableModule,
-    MatListModule,
-    MatButtonModule,
-    MatPaginatorModule
+    MaterialModuleModule //material module
 
   ],
   providers: [],

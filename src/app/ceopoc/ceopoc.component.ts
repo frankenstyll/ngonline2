@@ -1,3 +1,4 @@
+
 import { CeoData } from './shared/ceodata.model';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
@@ -5,7 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Periodic } from './shared/Periodic.model';
-import { SafeHtml, DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { SafeHtml, DomSanitizer, SafeUrl, SafeScript } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-ceopoc',
@@ -21,10 +22,16 @@ import { SafeHtml, DomSanitizer, SafeUrl } from '@angular/platform-browser';
 })
 export class CeopocComponent implements OnInit {
 
+  // dynamic function
+  // var functionName = 'myFunction';
+  // this[functionName]();
+
+  btnText: SafeHtml;
+
   tbodyInner = '';
   safeTbody : SafeHtml;
-  fncChild = 'javascript:isChild()';
-  safeFnc: SafeUrl;
+
+  safeFnc: SafeHtml;
 
   columnsToDisplay: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource2 : MatTableDataSource<Periodic>;
@@ -49,6 +56,8 @@ export class CeopocComponent implements OnInit {
   ];
 
   isTableExpanded = false;
+
+
 
   ELEMENT_DATA: Periodic[] = [
     {
@@ -208,13 +217,19 @@ export class CeopocComponent implements OnInit {
   ];
 
  dataStudentsList = new MatTableDataSource();
- displayedStudentsColumnsList: string[] = ['id', 'name', 'age', 'address', 'actions'];
+ displayedStudentsColumnsList: string[] = ['id', 'name', 'age', 'address', 'isExpanded'];
+
 
   constructor(private domSan: DomSanitizer) {
     this.dataMonth = 0;
-    this.safeFnc = this.domSan.bypassSecurityTrustScript(this.fncChild);
+    this.safeFnc = this.domSan.bypassSecurityTrustScript('');
+
+    this.btnText = this.domSan.bypassSecurityTrustHtml('<b>click</b>');
   }
 
+  setText(){
+    return this.domSan.bypassSecurityTrustHtml('<b>click</b>');
+  }
   ngOnInit() {
 
     this.createTbody();
@@ -245,8 +260,9 @@ export class CeopocComponent implements OnInit {
     console.log('is child');
   }
   createTbody(){
+
     let t = ``;
-    this.STUDENTS_DATA.forEach( (obj) => {
+    this.STUDENTS_DATA.forEach( (obj, index) => {
 
       let c = ``;
       obj.subjects.forEach( (sub) => {
@@ -265,7 +281,7 @@ export class CeopocComponent implements OnInit {
 
       t +=  `<tr>
         <td>
-          <i class="fas fa-plus" [onclick]="safeFnc"></i>
+          <button class="btn btn-primary" (click)="call_function()">click</button>
         </td>
         <td>${obj.id}</td>
         <td>${obj.name}</td>
@@ -279,6 +295,11 @@ export class CeopocComponent implements OnInit {
     });
     this.tbodyInner = t;
     this.safeTbody = this.domSan.bypassSecurityTrustHtml(this.tbodyInner);
+  }
+
+  call_function(){
+    console.log('xxxx');
+    return this.domSan.bypassSecurityTrustScript('javascript:alert("xx")');
   }
 
   addMonthData() {
@@ -327,6 +348,5 @@ export class CeopocComponent implements OnInit {
     }
     return value;
   }
-
 
 }
